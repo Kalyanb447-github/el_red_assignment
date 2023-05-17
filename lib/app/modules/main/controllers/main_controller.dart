@@ -14,7 +14,7 @@ class MainController extends GetxController {
         if (event?.uid != null && event!.uid.isNotEmpty) {
           Get.offAllNamed(Routes.HOME);
         } else {
-          Get.toNamed(Routes.LOGIN);
+          Get.offAllNamed(Routes.LOGIN);
         }
       },
     );

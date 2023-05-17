@@ -54,8 +54,13 @@ class _UpdateTaskPageState extends State<UpdateTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF46539e),
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFF587fc8)),
+        elevation: 0,
+        backgroundColor: Color(0xFF46539e),
         title: Text("Update Task"),
+        centerTitle: true,
       ),
       body: Form(
           key: _formKey,
@@ -94,12 +99,19 @@ class _UpdateTaskPageState extends State<UpdateTaskPage> {
                       child: TextFormField(
                         controller: taskNameController,
                         autofocus: false,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: 'Task : ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
+                          labelStyle:
+                              TextStyle(fontSize: 20.0, color: Colors.white),
                           errorStyle:
                               TextStyle(color: Colors.redAccent, fontSize: 15),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -114,56 +126,70 @@ class _UpdateTaskPageState extends State<UpdateTaskPage> {
                       child: TextFormField(
                         controller: descController,
                         autofocus: false,
+                        style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          labelText: 'desc: ',
-                          labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
+                          labelText: 'Description : ',
+                          labelStyle:
+                              TextStyle(fontSize: 20.0, color: Colors.white),
                           errorStyle:
                               TextStyle(color: Colors.redAccent, fontSize: 15),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     TextField(
                       controller:
                           dateController, //editing controller of this TextField
+                      style: TextStyle(color: Colors.white),
                       decoration: const InputDecoration(
-                          icon: Icon(Icons.calendar_today), //icon of text field
-                          labelText: "Enter Date" //label text of field
-                          ),
+                        icon: Icon(
+                          Icons.calendar_today,
+                          color: Colors.white,
+                        ), //icon of text field
+                        labelText: "Select Date", //label text of field,
+                        labelStyle:
+                            TextStyle(fontSize: 20.0, color: Colors.white),
+
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+
                       readOnly: true, // when true task cannot edit text
                       onTap: () async {
                         _selectDate(context);
                       },
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              // Validate returns true if the form is valid, otherwise false.
-                              if (_formKey.currentState!.validate()) {
-                                updateTask(widget.id);
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(
-                              'Update',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => {},
-                            child: Text(
-                              'Reset',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey),
-                          ),
-                        ],
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Validate returns true if the form is valid, otherwise false.
+                          if (_formKey.currentState!.validate()) {
+                            updateTask(widget.id);
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Text(
+                          'UPDATE TASK',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               );

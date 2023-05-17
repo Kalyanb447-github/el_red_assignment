@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../main.dart';
 import 'UpdateTaskPage.dart';
 
 class ListTaskPage extends StatefulWidget {
@@ -13,8 +14,10 @@ class ListTaskPage extends StatefulWidget {
 }
 
 class _ListTaskPageState extends State<ListTaskPage> {
-  final Stream<QuerySnapshot> toDoListsStream =
-      FirebaseFirestore.instance.collection('ToDoList').snapshots();
+  final Stream<QuerySnapshot> toDoListsStream = FirebaseFirestore.instance
+      .collection('ToDoList')
+      .where('user_id', isEqualTo: auth.currentUser!.uid)
+      .snapshots();
 
   // For Deleting Task
   CollectionReference toDoList =
@@ -50,8 +53,25 @@ class _ListTaskPageState extends State<ListTaskPage> {
 
         return SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListView.builder(
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 10),
+                child: Text(
+                  'TASKS',
+                  style: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListView.separated(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    color: Colors.grey,
+                    height: 1,
+                    thickness: .2,
+                  );
+                },
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: storedocs.length,
@@ -70,13 +90,41 @@ class _ListTaskPageState extends State<ListTaskPage> {
                         ),
                       );
                     },
-                    title: Text('${data['task_name']}'),
-                    subtitle: Text('${data['desc']}\n $formatted'),
-                    trailing: IconButton(
-                        onPressed: () {
-                          deleteTask(data['id']);
-                        },
-                        icon: Icon(Icons.delete)),
+                    leading: Container(
+                      height: 50,
+                      width: 50,
+                      child: Icon(Icons.task, color: Colors.blue),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: .5,
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      '${data['task_name']}',
+                      style: TextStyle(
+                          color: Colors.black54, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('${data['desc']}'),
+                    trailing: Column(
+                      children: [
+                        Text(
+                          '$formatted',
+                          style: TextStyle(color: Colors.grey, fontSize: 10),
+                        ),
+                        Expanded(
+                          child: IconButton(
+                            color: Colors.red.shade300,
+                            onPressed: () {
+                              deleteTask(data['id']);
+                            },
+                            icon: Icon(Icons.delete),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               )

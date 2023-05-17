@@ -72,6 +72,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     return Scaffold(
       backgroundColor: Color(0xFF46539e),
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFF587fc8)),
         elevation: 0,
         backgroundColor: Color(0xFF46539e),
         title: Text("Add new Task"),
