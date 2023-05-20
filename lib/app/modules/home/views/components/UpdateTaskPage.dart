@@ -61,6 +61,12 @@ class _UpdateTaskPageState extends State<UpdateTaskPage> {
         backgroundColor: Color(0xFF46539e),
         title: Text("Update Task"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.menu),
+          ),
+        ],
       ),
       body: Form(
           key: _formKey,
@@ -90,107 +96,122 @@ class _UpdateTaskPageState extends State<UpdateTaskPage> {
               final String formatted = formatter.format(dateTime);
 
               dateController.text = formatted;
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: ListView(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        controller: taskNameController,
-                        autofocus: false,
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 50,
+                        child: Icon(Icons.task, color: Colors.blue),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: .5,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        child: TextFormField(
+                          controller: taskNameController,
+                          autofocus: false,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            labelText: 'Task : ',
+                            labelStyle:
+                                TextStyle(fontSize: 20.0, color: Colors.white),
+                            errorStyle: TextStyle(
+                                color: Colors.redAccent, fontSize: 15),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please Enter Task';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        child: TextFormField(
+                          controller: descController,
+                          autofocus: false,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            labelText: 'Description : ',
+                            labelStyle:
+                                TextStyle(fontSize: 20.0, color: Colors.white),
+                            errorStyle: TextStyle(
+                                color: Colors.redAccent, fontSize: 15),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        controller:
+                            dateController, //editing controller of this TextField
                         style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          labelText: 'Task : ',
+                        decoration: const InputDecoration(
+                          icon: Icon(
+                            Icons.calendar_today,
+                            color: Colors.white,
+                          ), //icon of text field
+                          labelText: "Select Date", //label text of field,
                           labelStyle:
                               TextStyle(fontSize: 20.0, color: Colors.white),
-                          errorStyle:
-                              TextStyle(color: Colors.redAccent, fontSize: 15),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Task';
-                          }
-                          return null;
+
+                        readOnly: true, // when true task cannot edit text
+                        onTap: () async {
+                          _selectDate(context);
                         },
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
-                      child: TextFormField(
-                        controller: descController,
-                        autofocus: false,
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          labelText: 'Description : ',
-                          labelStyle:
-                              TextStyle(fontSize: 20.0, color: Colors.white),
-                          errorStyle:
-                              TextStyle(color: Colors.redAccent, fontSize: 15),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Container(
+                        height: 50,
+                        width: Get.width,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Validate returns true if the form is valid, otherwise false.
+                            if (_formKey.currentState!.validate()) {
+                              updateTask(widget.id);
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(
+                            'UPDATE TASK',
+                            style: TextStyle(fontSize: 18.0),
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextField(
-                      controller:
-                          dateController, //editing controller of this TextField
-                      style: TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        icon: Icon(
-                          Icons.calendar_today,
-                          color: Colors.white,
-                        ), //icon of text field
-                        labelText: "Select Date", //label text of field,
-                        labelStyle:
-                            TextStyle(fontSize: 20.0, color: Colors.white),
-
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-
-                      readOnly: true, // when true task cannot edit text
-                      onTap: () async {
-                        _selectDate(context);
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Validate returns true if the form is valid, otherwise false.
-                          if (_formKey.currentState!.validate()) {
-                            updateTask(widget.id);
-                            Navigator.pop(context);
-                          }
-                        },
-                        child: Text(
-                          'UPDATE TASK',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

@@ -75,8 +75,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
         iconTheme: IconThemeData(color: Color(0xFF587fc8)),
         elevation: 0,
         backgroundColor: Color(0xFF46539e),
-        title: Text("Add new Task"),
+        title: Text("Add new task"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.menu),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -86,6 +92,18 @@ class _AddTaskPageState extends State<AddTaskPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  child: Icon(Icons.task, color: Colors.blue),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: .5,
+                    ),
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10.0),
                   child: TextFormField(
@@ -98,10 +116,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       errorStyle:
                           TextStyle(color: Colors.redAccent, fontSize: 15),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
                     ),
                     controller: taskNameController,
@@ -125,10 +143,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       errorStyle:
                           TextStyle(color: Colors.redAccent, fontSize: 15),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
                     ),
                     controller: descController,
@@ -150,10 +168,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     labelStyle: TextStyle(fontSize: 20.0, color: Colors.white),
 
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Colors.grey),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: Colors.grey),
                     ),
                   ),
 
@@ -168,6 +186,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
                 Container(
                   height: 50,
+                  width: Get.width,
                   child: ElevatedButton(
                     onPressed: () {
                       // Validate returns true if the form is valid, otherwise false.
@@ -180,7 +199,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     },
                     child: Text(
                       'ADD YOUR TASK',
-                      style: TextStyle(fontSize: 18.0),
+                      style: TextStyle(fontSize: 16.0),
                     ),
                   ),
                 ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 
 import 'package:get/get.dart';
 
@@ -71,10 +73,20 @@ class LoginView extends GetView<LoginController> {
               height: 130,
             ),
             InkWell(
-                onTap: () {
-                  Get.toNamed(Routes.SIGNUP);
-                },
-                child: Text('New User? Create Account'))
+              onTap: () {
+                Get.toNamed(Routes.SIGNUP);
+              },
+              child: Text('New User? Create Account'),
+            ),
+            SizedBox(
+              height: 130,
+            ),
+            SignInButton(
+              Buttons.Google,
+              onPressed: () {
+                controller.signInWithGoogle();
+              },
+            ),
           ],
         ),
       ),
